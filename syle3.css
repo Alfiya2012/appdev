@@ -1,0 +1,5 @@
+body{background-color: pink;font-family:Arial}
+a:link{color:pink}
+a:visted{color:electric green}
+a:hover{color:blue}
+a:active{color:red}
