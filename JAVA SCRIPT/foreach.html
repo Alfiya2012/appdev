@@ -1,0 +1,17 @@
+<html>
+<body>
+<h2>Java Script Array for each</h2>
+<p>Calls a function once for each array element:</p>
+<p id="demo"></p>
+<script>
+const numbers=[1, 12, 8, 14, 21];
+let text="";
+numbers.forEach(myFunction);
+document.getElementById("demo").innerHTML= text;
+function myFunction(value, index, array){
+text+= value+"<br>";
+}
+</script>
+</body>
+</html>
+
