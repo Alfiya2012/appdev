@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enhanced Colorful Calculator</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .calculator {
+      background-color: #ffe4e1;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+      text-shadow: 1px 1px #fff;
+    }
+
+    .display {
+      width: 100%;
+      height: 50px;
+      font-size: 24px;
+      text-align: right;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      background-color: #f0f0f0;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+
+    .operator {
+      background-color: #ff9a9e;
+    }
+
+    .number {
+      background-color: #a1c4fd;
+    }
+
+    .equal {
+      background-color: #c2ffd8;
+      grid-column: span 2;
+    }
+
+    .clear {
+      background-color: #fbc2eb;
+      grid-column: span 2;
+    }
+
+    .footer {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="title">Arithmetic Operator</div>
+
+    <input type="text" class="display" id="display" disabled>
+
+    <div class="buttons">
+      <button class="number" onclick="append('7')">7</button>
+      <button class="number" onclick="append('8')">8</button>
+      <button class="number" onclick="append('9')">9</button>
+      <button class="operator" onclick="append('/')">÷</button>
+
+      <button class="number" onclick="append('4')">4</button>
+      <button class="number" onclick="append('5')">5</button>
+      <button class="number" onclick="append('6')">6</button>
+      <button class="operator" onclick="append('*')">×</button>
+
+      <button class="number" onclick="append('1')">1</button>
+      <button class="number" onclick="append('2')">2</button>
+      <button class="number" onclick="append('3')">3</button>
+      <button class="operator" onclick="append('-')">−</button>
+
+      <button class="number" onclick="append('0')">0</button>
+      <button class="number" onclick="append('.')">.</button>
+      <button class="operator" onclick="append('%')">%</button>
+      <button class="operator" onclick="append('+')">+</button>
+
+      <button class="operator" onclick="append('^')">**</button>
+      <button class="operator" onclick="append('++')">++</button>
+      <button class="operator" onclick="append('--')">--</button>
+      
+
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+
+    <div class="footer">Designed by ALFIYA SHAIKH</div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+
+    function append(value) {
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function calculate() {
+      let expression = display.value;
+
+      if (expression.includes('^')) {
+        const parts = expression.split('^');
+        if (parts.length === 2) {
+          const base = parseFloat(parts[0]);
+          const exponent = parseFloat(parts[1]);
+          display.value = Math.pow(base, exponent);
+          return;
+        } else {
+          display.value = 'Error';
+          return;
+        }
+      }
+
+      if (expression.includes('++')) {
+        const num = parseFloat(expression.replace('++', ''));
+        display.value = num + 1;
+        return;
+      }
+
+      if (expression.includes('--')) {
+        const num = parseFloat(expression.replace('--', ''));
+        display.value = num - 1;
+        return;
+      }
+
+      try {
+        display.value = eval(expression);
+      } catch {
+        display.value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>

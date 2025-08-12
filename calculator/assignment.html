@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assignment Operator Calculator</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #c2e9fb, #a1c4fd);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 28px;
+      text-shadow: 1px 1px #fff;
+    }
+
+    .calculator {
+      background-color: #e0f7fa;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      width: 320px;
+    }
+
+    .display {
+      width: 100%;
+      height: 50px;
+      font-size: 24px;
+      text-align: center;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      background-color: #f0f0f0;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #b2ebf2;
+    }
+
+    .assign {
+      background-color: #b39ddb;
+    }
+
+    .clear {
+      background-color: #ffccbc;
+      grid-column: span 3;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #444;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Assignment Operators</h1>
+
+  <div class="calculator">
+    <input type="text" class="display" id="display" disabled>
+    <div class="buttons">
+      <button class="assign" onclick="assign()">=</button>
+      <button class="assign" onclick="addAssign()">+=</button>
+      <button class="assign" onclick="subtractAssign()">-=</button>
+      <button class="assign" onclick="multiplyAssign()">*</button>
+      <button class="assign" onclick="divideAssign()">/=</button>
+      <button class="assign" onclick="modAssign()">%=</button>
+      <button class="clear" onclick="reset()">Reset</button>
+    </div>
+  </div>
+
+  <div class="footer">Designed by ALFIYA SHAIKH</div>
+
+  <script>
+    let x = 10;
+    const display = document.getElementById('display');
+
+    function updateDisplay(op = '') {
+      display.value = op ? `x ${op} → ${x}` : `x = ${x}`;
+    }
+
+    function assign() {
+      x = 10;
+      updateDisplay('=');
+    }
+
+    function addAssign() {
+      x += 5;
+      updateDisplay('+= 5');
+    }
+
+    function subtractAssign() {
+      x -= 3;
+      updateDisplay('-= 3');
+    }
+
+    function multiplyAssign() {
+      x *= 2;
+      updateDisplay('*= 2');
+    }
+
+    function divideAssign() {
+      x /= 2;
+      updateDisplay('/= 2');
+    }
+
+    function modAssign() {
+      x %= 4;
+      updateDisplay('%= 4');
+    }
+
+    function reset() {
+      x = 10;
+      updateDisplay();
+    }
+
+    updateDisplay(); // Initial display
+  </script>
+</body>
+</html>
