@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Odd Numbers </title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f8ff;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 100px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .output {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .odd {
+      background-color: #ff6347;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Odd Numbers </h1>
+  <p>Enter a range to find odd numbers:</p>
+  <input type="number" id="start" placeholder="Start">
+  <input type="number" id="end" placeholder="End">
+  <button onclick="showOddNumbers()">Show Odds</button>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    function showOddNumbers() {
+      const start = parseInt(document.getElementById('start').value);
+      const end = parseInt(document.getElementById('end').value);
+      const output = document.getElementById('output');
+      output.innerHTML = '';
+
+      if (isNaN(start) || isNaN(end) || start > end) {
+        output.innerHTML = '<p>Please enter a valid range.</p>';
+        return;
+      }
+
+      for (let i = start; i <= end; i++) {
+        if (i % 2 !== 0) {
+          const span = document.createElement('span');
+          span.className = 'odd';
+          span.textContent = i;
+          output.appendChild(span);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

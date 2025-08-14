@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reverse a Number</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f0f8ff;
+      text-align: center;
+      padding-top: 50px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Reverse a Number</h2>
+  <form method="post">
+    <input type="text" name="num" placeholder="Enter a number" required>
+    <button type="submit">Reverse</button>
+  </form>
+
+  <%
+    String num = request.getParameter("num");
+    if (num != null) {
+      try {
+        int number = Integer.parseInt(num);
+        int reversed = 0;
+        while (number != 0) {
+          int digit = number % 10;
+          reversed = reversed * 10 + digit;
+          number /= 10;
+        }
+  %>
+      <h3>Reversed Number: <%= reversed %></h3>
+  <%
+      } catch (NumberFormatException e) {
+  %>
+      <h3 style="color:red;">Please enter a valid number.</h3>
+  <%
+      }
+    }
+  %>
+</body>
+</html>
