@@ -1,0 +1,186 @@
+import React, { useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
+export default function CalculatorScreen() {
+  const [display, setDisplay] = useState('');
+
+  const append = (value: string) => {
+    setDisplay((prev) => prev + value);
+  };
+
+  const clearDisplay = () => {
+    setDisplay('');
+  };
+
+  // ✅ Utility: Reverse a number (handles negatives too)
+  const reverseNumber = () => {
+    try {
+      if (!display) return;
+      const num = parseFloat(display);
+      if (isNaN(num)) {
+        setDisplay('Error');
+        return;
+      }
+      const isNegative = num < 0;
+      const reversed = Math.abs(num).toString().split('').reverse().join('');
+      const result = isNegative ? -parseFloat(reversed) : parseFloat(reversed);
+      setDisplay(String(result));
+    } catch {
+      setDisplay('Error');
+    }
+  };
+
+  const calculate = () => {
+    try {
+      if (display.endsWith('++')) {
+        const num = parseFloat(display.slice(0, -2));
+        setDisplay(String(num + 1));
+        return;
+      }
+      if (display.endsWith('--')) {
+        const num = parseFloat(display.slice(0, -2));
+        setDisplay(String(num - 1));
+        return;
+      }
+      if (display.includes('^')) {
+        const [base, exponent] = display.split('^').map(parseFloat);
+        setDisplay(String(Math.pow(base, exponent)));
+        return;
+      }
+      setDisplay(String(eval(display)));
+    } catch {
+      setDisplay('Error');
+    }
+  };
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <View style={styles.calculatorBox}>
+        <Text style={styles.heading}>🧮 Arithmetic Calculator</Text>
+        <Text style={styles.display}>{display}</Text>
+
+        <View style={styles.grid}>
+          {['7', '8', '9', '/',
+            '4', '5', '6', '*',
+            '1', '2', '3', '-',
+            '0', '.', '%', '+'].map((btn) => (
+            <TouchableOpacity key={btn} style={[styles.button, styles.number]} onPress={() => append(btn)}>
+              <Text style={styles.buttonText}>{btn}</Text>
+            </TouchableOpacity>
+          ))}
+
+          <TouchableOpacity style={[styles.button, styles.operator]} onPress={() => append('^')}>
+            <Text style={styles.buttonText}>^</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.operator]} onPress={() => append('++')}>
+            <Text style={styles.buttonText}>++</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.operator]} onPress={() => append('--')}>
+            <Text style={styles.buttonText}>--</Text>
+          </TouchableOpacity>
+
+          {/* 🆕 Reverse Button */}
+          <TouchableOpacity style={[styles.button, styles.operator]} onPress={reverseNumber}>
+            <Text style={styles.buttonText}>Rev</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.button, styles.clear]} onPress={clearDisplay}>
+            <Text style={styles.buttonText}>C</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.equal]} onPress={calculate}>
+            <Text style={styles.buttonText}>=</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.footer}>Designed by Alfiya Shaikh 💖</Text>
+      </View>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF0F5',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 24,
+  },
+  calculatorBox: {
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 18,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    alignItems: 'center',
+  },
+  heading: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#6A5ACD',
+    marginBottom: 16,
+  },
+  display: {
+    width: '100%',
+    fontSize: 24,
+    backgroundColor: '#FDF5E6',
+    padding: 10,
+    borderRadius: 10,
+    textAlign: 'right',
+    marginBottom: 16,
+    color: '#444',
+    borderWidth: 1,
+    borderColor: '#D8BFD8',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  button: {
+    width: '22%',
+    paddingVertical: 12,
+    margin: 4,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  number: {
+    backgroundColor: '#a1c4fd',
+  },
+  operator: {
+    backgroundColor: '#ff9a9e',
+  },
+  clear: {
+    backgroundColor: '#fbc2eb',
+    width: '46%',
+  },
+  equal: {
+    backgroundColor: '#c2ffd8',
+    width: '46%',
+  },
+  footer: {
+    marginTop: 24,
+    fontSize: 13,
+    fontStyle: 'italic',
+    color: '#888',
+  },
+});
